@@ -2,28 +2,26 @@ import { Point } from "./Point";
 import { Shape } from "./Shape";
 
 export class Triangle extends Shape {
-  private v1: Point;
-  private v2: Point;
-  private v3: Point;
-
   constructor(v1: Point, v2: Point, v3: Point) {
-    super([v1, v2, v3])
-    this.v1 = v1;
-    this.v2 = v2;
-    this.v3 = v3;
+    super([v1, v2, v3]);
   }
 
-  public toString() {
-    return `Triangle[v1=${this.v1.toString()},v2=${this.v2.toString()},v3=${this.v3.toString()}]`
+  public toString(): string {
+    return `Triangle[v1=${this.points[0].toString()},v2=${this.points[1].toString()},v3=${this.points[2].toString()}]`;
   }
-  
-  public getType() {
-    if (this.v1.distance() == this.v2.distance() || this.v2.distance() == this.v3.distance() || this.v1.distance() == this.v3.distance()) {
-      if (this.v2.distance() == this.v3.distance()) {
-        return 'equilateral triangle';
-      }
-      return 'isosceles triangle';
+
+  public getType(): string {
+    const [sideA, sideB, sideC] = this.points.map((point, i, points) =>
+      point.distance(points[(i + 1) % points.length]).toFixed(2)
+    );
+    
+    console.log(sideA, sideB, sideC);
+    if (sideA === sideB && sideB === sideC) {
+      return "equilateral triangle";
+    } else if (sideA === sideB || sideB === sideC || sideC === sideA) {
+      return "isosceles triangle";
+    } else {
+      return "scalene triangle";
     }
-    return 'scalene triangle'
   }
 }
