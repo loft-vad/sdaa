@@ -16,21 +16,24 @@ export class Point {
     return `(${this.axisX}, ${this.axisY})`
   }
 
-  private calculateDistance(x1: number, y1: number, x2: number, y2: number): number {
-    return parseInt(Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2)).toFixed(0));
-  }
-
   public distance(): number;
   public distance(other: Point): number;
   public distance(x: number, y: number): number;
 
-  public distance(x?: number, y?: number, other?: Point): number {
-    if (other) {
-      return this.calculateDistance(this.axisX, other.axisX, this.axisY, other.axisY);
+  public distance(arg1?: Point | number, arg2?: number): number {
+    let x: number, y: number;
+    if (arg1 instanceof Point) {
+      x = arg1.axisX;
+      y = arg1.axisY;
+    } else if (typeof arg1 === "number" && typeof arg2 === "number") {
+      x = arg1;
+      y = arg1;
+    } else {
+      x = 0;
+      y = 0;
     }
-    if (x && y) {
-      return this.calculateDistance(this.axisX, x, this.axisY, y);
-    }
-    return this.calculateDistance(this.axisX, this.axisY, 0, 0);
+    const dx = this.axisX - x;
+    const dy = this.axisY - y;
+    return Math.sqrt(dx * dx + dy * dy);
   }
 }

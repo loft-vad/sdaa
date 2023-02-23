@@ -19,7 +19,6 @@ export abstract class Shape {
     this.filled = true;
 
     }
-    console.log(this.points)
   }
   public toString() {
     return `A Shape with color of ${this.color} and ${this.filled ? 'filled' : 'not filled'}. Points: ${this.points.forEach(point => point.toString())})`
